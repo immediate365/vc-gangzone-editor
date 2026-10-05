@@ -1,0 +1,56 @@
+.gze-gz {
+	position:absolute;
+	box-shadow:inset 1px 1px 0 rgba(255,255,255,0.25), inset -1px -1px 0 rgba(0,0,0,0.25);
+}
+.gze-gz .name {
+	padding-top:1px;
+	padding-left:2px;
+	color:#fff;
+	font-size:12px;
+	display:block;
+	position:absolute;
+	top:50%;
+	left:0;
+	right:0;
+	text-align:center;
+	height:14px;
+	line-height:14px;
+	overflow:hidden;
+	margin-top:-7px;
+	text-shadow:0 1px 2px rgba(0,0,0,0.5), 0 0 3px rgba(0,0,0,0.5);
+	cursor:default;
+}
+.gze-gz .ui-resizable-handle {
+	position:absolute;
+}
+.gze-gz:hover .ui-resizable-se  {
+	box-shadow:inset 0 0 0 1px rgba(255,255,255,0.25);
+	background:rgba(0,0,0,0.25);
+	border-radius:3px;
+}
+.gze-gz .ui-resizable-s {
+	bottom:-5px;
+	left:5px;
+	right:5px;
+	height:10px;
+	cursor:s-resize;
+}
+.gze-gz .ui-resizable-e {
+	top:5px;
+	bottom:5px;
+	right:-5px;
+	width:10px;
+	cursor:e-resize;
+}
+.gze-gz .ui-resizable-se {
+	bottom:-7px;
+	right:-7px;
+	width:14px;
+	height:14px;
+	cursor:se-resize;
+	z-index:3;
+}
+.gze-gz.highlighted {
+	box-shadow:inset 0 0 0 1px rgba(255,255,255,1), inset 0 0 30px rgba(255,255,255,0.5);
+	z-index:2;
+}

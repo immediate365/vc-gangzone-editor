@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>VC Gangzone Editor</title>
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Play:400,700" type="text/css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" type="text/css">
+		<link rel="stylesheet" href="devtools.css" type="text/css">
+		<link rel="stylesheet" href="style.css" type="text/css">
+		<link rel="stylesheet" href="gze-minimap.css" type="text/css">
+		<link rel="stylesheet" href="gze-help.css" type="text/css">
+		<link rel="stylesheet" href="gze-export.css" type="text/css">
+		<link rel="stylesheet" href="gze-gangzone.css" type="text/css">
+
+		<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		<script>
+			function onJQueryLoad( cb ) {
+				if ( typeof jQuery != 'undefined' && document.readyState === 'complete' ) { cb(); } else { setTimeout( function() { onJQueryLoad( cb ); }, 50 ); }
+			}
+		</script>
+	</head>
+	<body>
+
+<div id="dt-toolbar">
+	<div class="dt-toolbar-title">
+		<div class="dt-toolbar-title-module">Vice City gangzone editor</div>
+		<div class="dt-toolbar-title-devtools">based on Prineside DevTools</div>
+	</div>
+</div>
+
+<script src="gze.js"></script>
+<script src="gze-gangzone.js"></script>
+<script src="gze-minimap.js"></script>
+<script src="gze-help.js"></script>
+<script src="gze-export.js"></script>
+<script>
+	onJQueryLoad( function() {
+		GZE.init();
+		GZE_help.init();
+		GZE_export.init();
+	} );
+</script>
+
+<div id="gze-help" class="gze-window">
+	<div id="gze-help-tabs">
+		<div id="gze-help-tabs-header">
+			<div class="gze-help-tab-title active" id="gze-help-title-main" onClick="GZE_help.open( 'main' );">Main</div>
+			<div class="gze-help-tab-title" id="gze-help-title-navigation" onClick="GZE_help.open( 'navigation' );">Navigation</div>
+			<div class="gze-help-tab-title" id="gze-help-title-hotkeys" onClick="GZE_help.open( 'hotkeys' );">Hotkeys</div>
+
+			<div class="gze-help-close-button" onClick="GZE_help.hide();" title="Close help"><i class="fa fa-times"></i></div>
+		</div>
+		<div id="gze-help-tabs-content">
+			<div class="gze-help-tab-content active" id="gze-help-tab-main">
+				<h2>Gangzone editor description</h2>
+				<p>
+					This editor creates gangzones for the Vice City map. Coordinates are San Andreas world coordinates (VC is placed at X 3998..8000, Y -949..3053), ready for GangZoneCreate.
+				</p>
+				<p>
+					Read about <a href="#" onClick="GZE_help.open( 'navigation' );"> editor navigation </a> to learn how to work conveniently with it.
+					We also recommend you to look at <a href="#" onClick="GZE_help.open( 'hotkeys' );"> hotkeys </a>, which will save your time.
+				</p>
+				<p>
+					Map is automatically saved in your browser. If you close browser's tab, you will not loose your map.
+				</p>
+				<p>
+					<label><input type="checkbox" id="gze-doNotShowStartupScreen-checkbox" onChange="localStorage.setItem( '_gze_doNotShowStartupScreen', this.checked )"> Do not show this window on start</label>
+				</p>
+			</div>
+			<div class="gze-help-tab-content" id="gze-help-tab-navigation">
+				<h2>Editor navigation</h2>
+				<h3>Moving and resizing zones</h3>
+				<p>
+					Zones can be dragged and resized with mouse and keyboard arrows. You can also change zone size and position in zone inspector (top left of the screen).
+				</p>
+				<h3>Map viewing</h3>
+				<p>
+					You can navigate through the map with many methods:
+					<ul>
+						<li>Default scrollbars to the right and bottom of the map.</li>
+						<li>Grabbing map with right mouse key.</li>
+						<li>Scrolling with mouse whell. Press Shift to scroll horizontaly.</li>
+						<li>Middle mouse button. Press it and move pointer in the desired dirrection.</li>
+						<li>Ctrl + mouse wheel (or trackpad pinch) to zoom at the pointer. The + / - / 0 keys and the buttons at the bottom right zoom too.</li>
+						<li>Minimap, which can be accessed by pressing V button.</li>
+						<li>To focus on currently selected zone, press F</li>
+					</ul>
+				</p>
+			</div>
+			<div class="gze-help-tab-content" id="gze-help-tab-hotkeys">
+				<h2>Hotkeys</h2>
+				<ul>
+					<li><b>F</b> - focus on current zone (scroll the map)</li>
+					<li><b>V</b> - open mini-map</li>
+					<li><b>+ / -</b> - zoom in / out (Ctrl + wheel zooms at the pointer)</li>
+					<li><b>0</b> - reset zoom to 100%</li>
+					<li><b>D</b> - clone selected zone</li>
+					<li><b>S</b> - save the map</li>
+					<li><b>A</b> - add a new zone under mouse pointer</li>
+					<li><b>Del</b> - delete selected zone</li>
+					<li><b>Arrows</b> - move zone by 1m. in the arrow dirrection (pressing Shift = x10)</li>
+					<li><b>Ctrl + Arrows</b> - resize zone by 1m. in the arrow dirrection (pressing Shift = x10)</li>
+					<li><b>F11</b> - fullscreen mode</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="gze-export" class="gze-window">
+	<div id="gze-export-tabs">
+		<div id="gze-export-tabs-header">
+			<div class="gze-export-tab-title active" id="gze-export-title-custom" onClick="GZE_export.open( 'custom' );">Export</div>
+			<div class="gze-export-tab-title" id="gze-export-title-import" onClick="GZE_export.open( 'import' );">Import</div>
+
+			<div class="gze-export-close-button" onClick="GZE_export.hide();" title="Close export menu"><i class="fa fa-times"></i></div>
+		</div>
+		<div id="gze-export-tabs-content">
+			<div class="gze-export-tab-content active" id="gze-export-tab-custom">
+				<h2>Zone export</h2>
+				<h3>Template</h3>
+				<p>
+					<textarea id="gze-export-custom-pattern">{ "[name]", [minx], [miny], [maxx], [maxy], 0x[color-hex]FF },
+</textarea>
+					<button type="button" class="dt-button" onClick="GZE_export.runExport()">Export</button>
+				</p>
+				<h3>Available tags</h3>
+				<div id="gze-export-tag-table-wrap">
+					<table cellpadding="0" cellspacing="0" border="0">
+						<tr><td>[name]</td><td>Zone name</td></tr>
+						<tr><td>[minx]</td><td>Minimum X (left)</td></tr>
+						<tr><td>[maxx]</td><td>Maximum X (right)</td></tr>
+						<tr><td>[miny]</td><td>Minimum Y (bottom)</td></tr>
+						<tr><td>[maxy]</td><td>Maximum Y (top)</td></tr>
+						<tr><td>[width]</td><td>Zone width</td></tr>
+						<tr><td>[height]</td><td>Zone height</td></tr>
+						<tr><td>[color-hex]</td><td>Zone color as hex (example: 0099FF)</td></tr>
+						<tr><td>[color-rgb]</td><td>Zone color as rgb (example:255,0,127)</td></tr>
+					</table>
+				</div>
+				<h3>Description</h3>
+				<p>
+					All tags in the template will be replaced with zone data. Use tags to create necessary output (as example, basic template allows you to export into PAWN array).
+				</p>
+				<p>
+					Line breaks are mentioned too. Add a line break to the end of the template to put each zone output on a new line.
+				</p>
+			</div>
+			<div class="gze-export-tab-content" id="gze-export-tab-import">
+				<h2>Zone import</h2>
+				<p>
+					Paste zones below, one per line, or load a file. Each line needs <b>minx, miny, maxx, maxy</b> in that order. A quoted name and a <b>0xRRGGBB</b> / <b>0xRRGGBBAA</b> color are picked up if present, so output from the default export template imports as-is.
+				</p>
+				<p>
+					<textarea id="gze-import-text" placeholder='{ "Ocean Beach", 4500, 100, 4800, 400, 0xFF0000FF },'></textarea>
+				</p>
+				<p>
+					<input type="file" id="gze-import-file" accept=".txt,.pwn,.inc,.p" onChange="GZE_export.loadImportFile( this );">
+				</p>
+				<p>
+					<label><input type="checkbox" id="gze-import-replace"> Replace existing zones</label>
+				</p>
+				<p>
+					<button type="button" class="dt-button" onClick="GZE_export.runImport()">Import</button>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	if ( localStorage.getItem( '_gze_doNotShowStartupScreen' ) == "true" ) {
+		document.getElementById( 'gze-help' ).style.display = "none";
+		document.getElementById( 'gze-doNotShowStartupScreen-checkbox' ).checked = true;
+	} else {
+		document.getElementById( 'gze-doNotShowStartupScreen-checkbox' ).checked = false;
+	}
+
+	if ( !localStorage.getItem( '_gze_showExport' ) ) {
+		document.getElementById( 'gze-export' ).style.display = "none";
+	}
+</script>
+
+<div id="dt-main">
+	<div id="gze">
+		<div id="gze-menu">
+			<div id="gze-menu-content">
+				<div id="gze-menu-main">
+					<button title="New map" onClick="if ( window.confirm( 'Create new map? All unsaved changes will be lost' ) ) { GZE.startNewMap(); }">
+						<i class="fa fa-file"></i>
+					</button>
+					<button title="Import" onClick="GZE_export.open( 'import' );">
+						<i class="fa fa-download"></i>
+					</button>
+					<button title="Export" onClick="GZE_export.open( 'custom' );">
+						<i class="fa fa-upload"></i>
+					</button>
+					<button title="Help..." onClick="GZE_help.show();">
+						<i class="fa fa-question"></i>
+					</button>
+				</div>
+
+				<div id="gze-zone-inspector">
+					<label>Title</label>
+					<input type="text" id="gze-inspector-name" value="0" data-inspectorParameter="name">
+					<label>Position</label>
+					<div id="gze-inspector-position">
+						<div class="row">
+							<div class="col col-4">
+								<input type="text" id="gze-inspector-border-left" value="0" data-inspectorParameter="left">
+							</div>
+							<div class="col col-4">
+								<input type="text" id="gze-inspector-border-top" value="0" data-inspectorParameter="top">
+								<input type="text" id="gze-inspector-border-bottom" value="0" data-inspectorParameter="bottom">
+							</div>
+							<div class="col col-4">
+								<input type="text" id="gze-inspector-border-right" value="0" data-inspectorParameter="right">
+							</div>
+						</div>
+					</div>
+					<div id="gze-inspector-size">
+						<div class="row">
+							<div class="col col-6">
+								<div class="row" style="margin:0;">
+									<div class="col col-6">
+										<label>Width</label>
+									</div>
+									<div class="col col-6">
+										<input type="text" id="gze-inspector-width" value="0" data-inspectorParameter="width">
+									</div>
+								</div>
+							</div>
+							<div class="col col-6">
+								<div class="row" style="margin:0;">
+									<div class="col col-6">
+										<label>Height</label>
+									</div>
+									<div class="col col-6">
+										<input type="text" id="gze-inspector-height" value="0" data-inspectorParameter="height">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="gze-inspector-colors"></div>
+				</div>
+
+				<div id="gze-zone-list-controls">
+					<button title="Create zone" onClick="GZE.createGangzoneInScreenCenter();">
+						<i class="fa fa-plus"></i>
+					</button>
+					<button title="Clone selected" onClick="if ( GZE.activeGangzone ) GZE.duplicateActiveGangzone();">
+						<i class="fa fa-clone"></i>
+					</button>
+					<button title="Remove selected" onClick="if ( GZE.activeGangzone ) GZE.activeGangzone.remove();">
+						<i class="fa fa-trash"></i>
+					</button>
+				</div>
+
+				<div id="gze-zone-list-wrap">
+					<div id="gze-zone-list"></div>
+				</div>
+			</div>
+
+			<div id="gze-menu-toggle"></div>
+		</div>
+		<div id="gze-map-wrap">
+			<div id="gze-map-container">
+				<div id="gze-map">
+					<div id="gze-map-layer-gangzones"></div>
+					<div id="gze-mouse-position-helper"></div>
+				</div>
+			</div>
+			<div id="gze-zoom-controls">
+				<button title="Zoom out (-)" onClick="GZE.stepZoom( -1 );"><i class="fa fa-minus"></i></button>
+				<button id="gze-zoom-level" title="Reset zoom (0)" onClick="GZE.setZoom( 1 );">100%</button>
+				<button title="Zoom in (+)" onClick="GZE.stepZoom( 1 );"><i class="fa fa-plus"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	[ [255,0,0], [0,255,0], [0,0,255], [255,255,0], [0,255,255], [255,0,255], [255,127,0], [0,255,127], [127,0,255], [255,0,127], [127,255,0], [0,127,255] ].forEach( function( c ) {
+		var el = document.createElement( 'div' );
+		el.className = 'gze-inspector-color';
+		el.id = 'gze-inspector-color-' + c.join( '_' );
+		el.style.background = 'rgb(' + c.join( ',' ) + ')';
+		el.onclick = function() { if ( GZE.activeGangzone ) { GZE.activeGangzone.setColor( c[0], c[1], c[2] ); } };
+		document.getElementById( 'gze-inspector-colors' ).appendChild( el );
+	} );
+</script>
+
+	</body>
+</html>
