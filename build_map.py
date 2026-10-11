@@ -3,10 +3,9 @@ import sys
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TILE_DIR = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "..", "vcrp-launcher", "mods", "modloader", "MapExpander", "MapExpander", "tiles", "vicecity")
+TILE_DIR = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "..", "SAMapExpander", "output", "MapExpander", "tiles", "vicecity")
 
 TILES = 8
-TILE_PX = 512
 TILE_UNITS = 500
 GRID_MIN_X = -2000
 GRID_MAX_Y = 2000
@@ -17,6 +16,8 @@ MAP_MIN_X = 3998
 MAP_MAX_Y = 3053
 MAP_SIZE = 4002
 MINIMAP_SIZE = 200
+
+TILE_PX = Image.open(os.path.join(TILE_DIR, "radar00.png")).width
 
 stitched = Image.new("RGB", (TILES * TILE_PX, TILES * TILE_PX))
 for row in range(TILES):

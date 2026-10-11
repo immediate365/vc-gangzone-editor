@@ -22,9 +22,9 @@ Zones autosave to the browser's localStorage.
 python build_map.py [path\to\radar\tiles]
 ```
 
-Stitches the 64 VC radar tiles (`radar00.png`..`radar63.png`, 512px, 500 units each) into `img/vc-map.jpg` (1px = 1 unit) and `img/vc-map-200.jpg`. Requires Pillow. Change `ORIGIN_X`/`ORIGIN_Y` and `GZE.mapOrigin` in `gze.js` if the map placement changes.
+Stitches the 64 VC radar tiles (`radar00.png`..`radar63.png`, 500 units each, default `..\SAMapExpander\output\MapExpander\tiles\vicecity`) into `img/vc-map.jpg` (1px = 1 unit) and `img/vc-map-200.jpg`. Requires Pillow. Change `ORIGIN_X`/`ORIGIN_Y` and `GZE.mapOrigin` in `gze.js` if the map placement changes.
 
 ## Credits
 
 - Original editor: Prineside DevTools (dev.prineside.com)
-- Radar tiles: HQ VC Radar by yojo2
+- Radar tiles: SAMapExpander (VC radar)
